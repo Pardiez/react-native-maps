@@ -603,6 +603,7 @@ RCT_EXPORT_METHOD(setIndoorActiveLevelIndex:(nonnull NSNumber *)reactTag
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapOverlay:(GMSPolygon *)polygon {
+  NSLog(@"didTapOverlay");
   AIRGoogleMap *googleMapView = (AIRGoogleMap *)mapView;
   [googleMapView didTapPolygon:polygon];
 }

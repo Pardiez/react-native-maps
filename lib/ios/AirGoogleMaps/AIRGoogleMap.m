@@ -290,6 +290,7 @@ id regionAsJSON(MKCoordinateRegion region) {
 
 
 - (void)didPrepareMap {
+  printf(@"didPrepareMap");
   UIView* mapView = [self valueForKey:@"mapView"]; //GMSVectorMapView
   [self overrideGestureRecognizersForView:mapView];
 
@@ -299,6 +300,7 @@ id regionAsJSON(MKCoordinateRegion region) {
 }
 
 - (void)mapViewDidFinishTileRendering {
+  printf(@"mapViewDidFinishTileRendering");
   if (self.onMapLoaded) self.onMapLoaded(@{});
 }
 
@@ -322,6 +324,7 @@ id regionAsJSON(MKCoordinateRegion region) {
 }
 
 - (void)didTapPolyline:(GMSOverlay *)polyline {
+  printf(@"Polyline");
   AIRGMSPolyline *airPolyline = (AIRGMSPolyline *)polyline;
 
   id event = @{@"action": @"polyline-press",
@@ -332,10 +335,12 @@ id regionAsJSON(MKCoordinateRegion region) {
 }
 
 - (void)didTapPolygon:(GMSOverlay *)polygon {
+  NSLog(@"Polygon");
     AIRGMSPolygon *airPolygon = (AIRGMSPolygon *)polygon;
 
     id event = @{@"action": @"polygon-press",
                  @"id": airPolygon.identifier ?: @"unknown",
+                 @"didTapPolygon": @"didTapPolygon"
                  };
 
     if (airPolygon.onPress) airPolygon.onPress(event);
@@ -343,6 +348,7 @@ id regionAsJSON(MKCoordinateRegion region) {
 
 - (void)didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
   if (!self.onPress) return;
+  printf(@"Something To Print");
   self.onPress([self eventFromCoordinate:coordinate]);
 }
 
@@ -496,7 +502,7 @@ id regionAsJSON(MKCoordinateRegion region) {
   GMSMapStyle *style = [GMSMapStyle styleWithJSONString:customMapStyleString error:&error];
 
   if (!style) {
-    NSLog(@"The style definition could not be loaded: %@", error);
+    printf(@"The style definition could not be loaded: %@", error);
   }
 
   self.mapStyle = style;
@@ -713,6 +719,7 @@ id regionAsJSON(MKCoordinateRegion region) {
     NSObject* delayedTouch = [delayedTouches firstObject]; //UIGestureDeleayedTouch
     UITouch* tapTouch = [delayedTouch valueForKey:@"stateWhenDelayed"];
     if (!tapTouch)
+      NSLog(@"extendedMapGestureHandler !tapTouch")
         tapTouch = oneTouch;
         tapPoint = [tapTouch locationInView:self];
         isTapInsideBubble = tapTouch != nil && CGRectContainsPoint(bubbleFrame, tapPoint);
@@ -735,6 +742,7 @@ id regionAsJSON(MKCoordinateRegion region) {
             UIView* realSubview = [(RCTView*)bubbleView hitTest:tapPointInBubble withEvent:nil];
             AIRGoogleMapCalloutSubview* realPressableSubview = nil;
             if (realSubview) {
+      NSLog(@"realSubview")
                 UIView* tmp = realSubview;
                 while (tmp && tmp != win && tmp != bubbleView) {
                     if ([tmp respondsToSelector:@selector(onPress)]) {
@@ -746,6 +754,7 @@ id regionAsJSON(MKCoordinateRegion region) {
             }
 
             if (markerView) {
+      NSLog(@"markerView")
                 BOOL isInsideCallout = [markerView.calloutView isPointInside:tapPointInBubble];
                 if (isInsideCallout) {
                     [markerView didTapInfoWindowOfMarker:marker subview:realPressableSubview point:tapPointInBubble frame:bubbleFrame];
@@ -766,6 +775,7 @@ id regionAsJSON(MKCoordinateRegion region) {
     }
 
     if (performOriginalActions) {
+      NSLog(@"performOriginalActions")
         NSDictionary* origMeta = [self.origGestureRecognizersMeta objectForKey:grHash];
         NSDictionary* origTargets = [origMeta objectForKey:@"targets"];
         for (NSDictionary* origTarget in origTargets) {
