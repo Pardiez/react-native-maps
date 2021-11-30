@@ -719,7 +719,7 @@ id regionAsJSON(MKCoordinateRegion region) {
     NSObject* delayedTouch = [delayedTouches firstObject]; //UIGestureDeleayedTouch
     UITouch* tapTouch = [delayedTouch valueForKey:@"stateWhenDelayed"];
     if (!tapTouch)
-      NSLog(@"extendedMapGestureHandler !tapTouch")
+      NSLog(@"extendedMapGestureHandler !tapTouch");
         tapTouch = oneTouch;
         tapPoint = [tapTouch locationInView:self];
         isTapInsideBubble = tapTouch != nil && CGRectContainsPoint(bubbleFrame, tapPoint);
@@ -742,7 +742,7 @@ id regionAsJSON(MKCoordinateRegion region) {
             UIView* realSubview = [(RCTView*)bubbleView hitTest:tapPointInBubble withEvent:nil];
             AIRGoogleMapCalloutSubview* realPressableSubview = nil;
             if (realSubview) {
-      NSLog(@"realSubview")
+      NSLog(@"realSubview");
                 UIView* tmp = realSubview;
                 while (tmp && tmp != win && tmp != bubbleView) {
                     if ([tmp respondsToSelector:@selector(onPress)]) {
@@ -754,7 +754,7 @@ id regionAsJSON(MKCoordinateRegion region) {
             }
 
             if (markerView) {
-      NSLog(@"markerView")
+      NSLog(@"markerView");
                 BOOL isInsideCallout = [markerView.calloutView isPointInside:tapPointInBubble];
                 if (isInsideCallout) {
                     [markerView didTapInfoWindowOfMarker:marker subview:realPressableSubview point:tapPointInBubble frame:bubbleFrame];
@@ -775,7 +775,7 @@ id regionAsJSON(MKCoordinateRegion region) {
     }
 
     if (performOriginalActions) {
-      NSLog(@"performOriginalActions")
+      NSLog(@"performOriginalActions");
         NSDictionary* origMeta = [self.origGestureRecognizersMeta objectForKey:grHash];
         NSDictionary* origTargets = [origMeta objectForKey:@"targets"];
         for (NSDictionary* origTarget in origTargets) {
