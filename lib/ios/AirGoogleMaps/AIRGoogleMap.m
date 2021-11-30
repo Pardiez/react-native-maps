@@ -788,6 +788,8 @@ id regionAsJSON(MKCoordinateRegion region) {
             NSObject* target = [targetValue nonretainedObjectValue];
             NSString* actionString = [origTarget objectForKey:@"action"];
             SEL action = NSSelectorFromString(actionString);
+            NSLog(@"target class");
+            NSLog(@"%@", [target class]);
             NSLog(@"actionString");
             NSLog(@"%@", actionString);
 #pragma clang diagnostic push
