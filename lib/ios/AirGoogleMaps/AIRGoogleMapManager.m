@@ -609,6 +609,7 @@ RCT_EXPORT_METHOD(setIndoorActiveLevelIndex:(nonnull NSNumber *)reactTag
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
+  NSLog(@"didTapAtCoordinate");
   AIRGoogleMap *googleMapView = (AIRGoogleMap *)mapView;
   [googleMapView didTapAtCoordinate:coordinate];
 }

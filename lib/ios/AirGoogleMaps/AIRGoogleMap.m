@@ -763,6 +763,7 @@ id regionAsJSON(MKCoordinateRegion region) {
                     if (markerAtTapPoint != nil) {
                         [self didTapMarker:markerAtTapPoint.realMarker];
                     } else {
+                      
                         CLLocationCoordinate2D coord = [self.projection coordinateForPoint:tapPoint];
                         [markerView hideCalloutView];
                         [self didTapAtCoordinate:coord];
@@ -777,12 +778,18 @@ id regionAsJSON(MKCoordinateRegion region) {
     if (performOriginalActions) {
       NSLog(@"performOriginalActions");
         NSDictionary* origMeta = [self.origGestureRecognizersMeta objectForKey:grHash];
+        NSLog(@"origMeta");
+        NSLog(@"%@", origMeta);
         NSDictionary* origTargets = [origMeta objectForKey:@"targets"];
+        NSLog(@"origTargets");
+        NSLog(@"%@", origTargets);
         for (NSDictionary* origTarget in origTargets) {
             NSValue* targetValue = [origTarget objectForKey:@"target"];
             NSObject* target = [targetValue nonretainedObjectValue];
             NSString* actionString = [origTarget objectForKey:@"action"];
             SEL action = NSSelectorFromString(actionString);
+            NSLog(@"actionString");
+            NSLog(@"%@", actionString);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             [target performSelector:action withObject:gestureRecognizer];
